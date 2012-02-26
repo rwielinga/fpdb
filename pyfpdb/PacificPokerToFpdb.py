@@ -233,8 +233,11 @@ class PacificPoker(HandHistoryConverter):
         info.update(m.groupdict())
         info.update(m2.groupdict())
 
-        #log.debug("readHandInfo: %s" % info)
+        log.setLevel('DEBUG')
+        log.debug("readHandInfo: %s" % info)
+
         for key in info:
+            log.debug("hand.tablename==%s." % hand.tablename)
             if key == 'DATETIME':
                 # 28 11 2011 19:05:11
                 m1 = self.re_DateTime.finditer(info[key])
@@ -245,10 +248,16 @@ class PacificPoker(HandHistoryConverter):
                 hand.startTime = HandHistoryConverter.changeTimezone(hand.startTime, "ET", "UTC")
             if key == 'HID':
                 hand.handid = info[key]
+            if key == 'TABLE' and info[key] != None:
+                hand.tablename = info[key]
+            if key == 'TABLENO' and info[key] != None:
+                # Table number for tournaments. Either TABLE or TABLENO should be filled in re_HandInfo
+                hand.tablename = info[key]
             if key == 'TOURNO':
-																# Tourneys require the tourney number and the table number to be in the Hands.tableName column in the DB
-                hand.tourNo = info[key] + " " + info['TABLENO']
-                hand.isKO = False
+                hand.tourNo = info[key]
+            #if key == 'TOURNO':
+            #    # Tourneys require the tourney number and the table number to be in the Hands.tableName column in the DB
+            #    hand.tourNo = info[key] + " " + info['TABLENO']
             if key == 'BUYIN' and info['BUYIN'] != None:
                 if info[key] == 'Free':
                     hand.buyin = 0
