@@ -233,9 +233,7 @@ class PacificPoker(HandHistoryConverter):
         info.update(m.groupdict())
         info.update(m2.groupdict())
 
-        log.setLevel('DEBUG')
-        log.debug("readHandInfo: %s" % info)
-
+        #log.debug("readHandInfo: %s" % info)
         for key in info:
             log.debug("hand.tablename==%s." % hand.tablename)
             if key == 'DATETIME':
@@ -255,9 +253,6 @@ class PacificPoker(HandHistoryConverter):
                 hand.tablename = info[key]
             if key == 'TOURNO':
                 hand.tourNo = info[key]
-            #if key == 'TOURNO':
-            #    # Tourneys require the tourney number and the table number to be in the Hands.tableName column in the DB
-            #    hand.tourNo = info[key] + " " + info['TABLENO']
             if key == 'BUYIN' and info['BUYIN'] != None:
                 if info[key] == 'Free':
                     hand.buyin = 0
