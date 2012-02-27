@@ -257,15 +257,12 @@ class PacificPoker(HandHistoryConverter):
                 if info[key] == 'Free':
                     hand.buyin = 0
                     hand.fee = 0
-                    if 'CURRENCY' in info and info['CURRENCY'] == "$":
-                        hand.buyinCurrency = "USD"
-                    else:
-                        hand.buyinCurrency = "FREE"
+                    hand.buyinCurrency = "FREE"
                 else:
                     if info[key].find("$")!=-1:
                         hand.buyinCurrency="USD"
-                    if 'PLAY' in info and info['PLAY'] != "Practice Play":
-                        hand.buyinCurrency="FREE"
+                    elif 'PLAY' in info and info['PLAY'] == "(Practice Play)":
+                        hand.buyinCurrency="play"
                     else:
                         #FIXME: handle other currencies, FPP, play money
                         log.error(_("PacificPokerToFpdb.readHandInfo: Failed to detect currency.") + " Hand ID: %s: '%s'" % (hand.handid, info[key]))

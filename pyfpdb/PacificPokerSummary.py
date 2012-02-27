@@ -110,6 +110,7 @@ class PacificPokerSummary(TourneySummary):
         #self.startTime = datetime.datetime.strptime(datetimestr, "%Y/%m/%d %H:%M:%S")
         if mg['CURRENCY'] == "$":     self.buyinCurrency="USD"
         elif mg['CURRENCY'] == u"€":  self.buyinCurrency="EUR"
+        elif not mg['CURRENCY']:      self.buyinCurrency="play"
         if self.buyin == 0:           self.buyinCurrency="FREE"
         self.currency = self.buyinCurrency
 
@@ -124,9 +125,6 @@ class PacificPokerSummary(TourneySummary):
             winnings = int(100*convert_to_decimal(mg['WINNINGS']))
             if mg['WCURRENCY'] == "$":     self.currency="USD"
             elif mg['WCURRENCY'] == u"€":  self.currency="EUR"
-        if self.currency != "" and self.buyinCurrency == "FREE":
-            # If the buyinCurrency is unknown, the buyin currency is set to the payout currency (if available)
-            self.buyinCurrency = self.currency
         if 'PREBUYS' in mg and mg['PREBUYS'] != None:
             rebuyCount = int(mg['PREBUYS'])
         if 'PADDONS' in mg and mg['PADDONS'] != None:
