@@ -3784,10 +3784,7 @@ class Sql:
                       select s.name                                                                 AS siteName
                             ,t.tourneyTypeId                                                        AS tourneyTypeId
                             ,tt.currency                                                            AS currency
-                            ,(CASE
-                                WHEN tt.currency = 'play' THEN tt.buyIn
-                                ELSE tt.buyIn/100.0
-                              END)                                                                  AS buyIn
+                            ,tt.buyIn/100.0                                                         AS buyIn
                             ,tt.fee/100.0                                                           AS fee
                             ,tt.category                                                            AS category
                             ,tt.limitType                                                           AS limitType
@@ -3799,10 +3796,7 @@ class Sql:
                             ,SUM(CASE WHEN rank = 2 THEN 1 ELSE 0 END)                              AS _2nd
                             ,SUM(CASE WHEN rank = 3 THEN 1 ELSE 0 END)                              AS _3rd
                             ,SUM(tp.winnings)/100.0                                                 AS won
-                            ,SUM(CASE
-                                   WHEN tt.currency = 'play' THEN tt.buyIn
-                                   ELSE (tt.buyIn+tt.fee)/100.0
-                                 END)                                                               AS spent
+                            ,SUM(tt.buyIn+tt.fee)/100.0                                             AS spent
                             ,ROUND(
                                 (CAST(SUM(tp.winnings - tt.buyin - tt.fee) AS REAL)/
                                 CAST(SUM(tt.buyin+tt.fee) AS REAL))* 100.0
@@ -3827,10 +3821,7 @@ class Sql:
                       select s.name                                                                 AS "siteName"
                             ,t.tourneyTypeId                                                        AS "tourneyTypeId"
                             ,tt.currency                                                            AS "currency"
-                            ,(CASE
-                                WHEN tt.currency = 'play' THEN tt.buyIn
-                                ELSE tt.buyIn/100.0
-                              END)                                                                  AS "buyIn"
+                            ,tt.buyIn/100.0                                                         AS "buyIn"
                             ,tt.fee/100.0                                                           AS "fee"
                             ,tt.category                                                            AS "category"
                             ,tt.limitType                                                           AS "limitType"
@@ -3842,10 +3833,7 @@ class Sql:
                             ,SUM(CASE WHEN rank = 2 THEN 1 ELSE 0 END)                              AS "_2nd"
                             ,SUM(CASE WHEN rank = 3 THEN 1 ELSE 0 END)                              AS "_3rd"
                             ,SUM(tp.winnings)/100.0                                                 AS "won"
-                            ,SUM(CASE
-                                   WHEN tt.currency = 'play' THEN tt.buyIn
-                                   ELSE (tt.buyIn+tt.fee)/100.0
-                                 END)                                                               AS "spent"
+                            ,SUM(tt.buyIn+tt.fee)/100.0                                             AS "spent"
                             ,ROUND(
                                 (CAST(SUM(tp.winnings - tt.buyin - tt.fee) AS REAL)/
                                 CAST(SUM(tt.buyin+tt.fee) AS REAL))* 100.0
@@ -3870,10 +3858,7 @@ class Sql:
                       select s.name                                                                 AS siteName
                             ,t.tourneyTypeId                                                        AS tourneyTypeId
                             ,tt.currency                                                            AS currency
-                            ,(CASE
-                                WHEN tt.currency = 'play' THEN tt.buyIn
-                                ELSE tt.buyIn/100.0
-                              END)                                                                  AS buyIn
+                            ,tt.buyIn/100.0                                                         AS buyIn
                             ,tt.fee/100.0                                                           AS fee
                             ,tt.category                                                            AS category
                             ,tt.limitType                                                           AS limitType
@@ -3885,10 +3870,7 @@ class Sql:
                             ,SUM(CASE WHEN rank = 2 THEN 1 ELSE 0 END)                              AS _2nd
                             ,SUM(CASE WHEN rank = 3 THEN 1 ELSE 0 END)                              AS _3rd
                             ,SUM(tp.winnings)/100.0                                                 AS won
-                            ,SUM(CASE
-                                   WHEN tt.currency = 'play' THEN tt.buyIn
-                                   ELSE (tt.buyIn+tt.fee)/100.0
-                                 END)                                                               AS spent
+                            ,SUM(tt.buyIn+tt.fee)/100.0                                             AS spent
                             ,ROUND(
                                 (CAST(SUM(tp.winnings - tt.buyin - tt.fee) AS REAL)/
                                 CAST(SUM(tt.buyin+tt.fee) AS REAL))* 100.0

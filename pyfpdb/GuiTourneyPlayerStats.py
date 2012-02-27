@@ -28,6 +28,9 @@ import Charset
 import TourneyFilters
 import GuiPlayerStats
 
+import logging
+log = logging.getLogger("fpdb")
+
 colalias,colshow,colheading,colxalign,colformat,coltype = 0,1,2,3,4,5
 
 class GuiTourneyPlayerStats (GuiPlayerStats.GuiPlayerStats):
@@ -117,7 +120,7 @@ class GuiTourneyPlayerStats (GuiPlayerStats.GuiPlayerStats):
         
         query = self.sql.query[query]
         query = self.refineQuery(query, numTourneys, tourneyTypes, playerids, sitenos, seats)
-        print "DEBUG:\n%s" % query
+        log.debug("GuiTourneyPlayerStats.addGrid: query: %s" % query)
         self.cursor.execute(query)
         result = self.cursor.fetchall()
         #print "result of the big query in addGrid:",result
@@ -183,6 +186,8 @@ class GuiTourneyPlayerStats (GuiPlayerStats.GuiPlayerStats):
             for col,column in enumerate(self.cols_to_show):
                 if column[colalias] in colnames:
                     value = result[sqlrow][colnames.index(column[colalias])]
+                    log.debug("GuiTourneyPlayerStats.addGrid: sqlresult[row:%s][colnames.index(%s)]: %s"
+                        % (sqlrow, column[colalias], value))
                 else:
                     value = 111
                 if value != None and value != -999:
